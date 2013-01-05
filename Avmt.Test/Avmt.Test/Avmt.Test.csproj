@@ -55,10 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BusyWeakEventListener.cs" />
-    <Compile Include="BackgroundVisualHost.cs" />
-    <Compile Include="BusyAdornerDecorator.cs" />
-    <Compile Include="IsVisibleChangedEventArgs.cs" />
     <Compile Include="IsVisibleWeakEventManager.cs" />
     <Compile Include="LoadedWeakEventManager.cs" />
     <Compile Include="SizeChangedWeakEventManager.cs" />

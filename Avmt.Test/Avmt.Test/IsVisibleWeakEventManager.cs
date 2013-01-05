@@ -20,7 +20,7 @@ namespace Avmt.Test
 
         private void DeliverEvent(object sender, DependencyPropertyChangedEventArgs e)
         {
-            base.DeliverEvent(sender, new IsVisibleChangedEventArgs((bool)e.NewValue));
+            base.DeliverEvent(sender, EventArgs.Empty);
         }
     }
 }
