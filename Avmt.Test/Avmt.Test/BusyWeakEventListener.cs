@@ -31,7 +31,6 @@ namespace Avmt.Test
             IsVisibleWeakEventManager.AddListener(_parent, this);
             LoadedWeakEventManager.AddListener(_parent, this);
             SizeChangedWeakEventManager.AddListener(_parent, this);
-
         }
 
         #endregion
@@ -88,7 +87,6 @@ namespace Avmt.Test
             IsVisibleWeakEventManager.RemoveListener(_parent, this);
             SizeChangedWeakEventManager.RemoveListener(_parent, this);
             LoadedWeakEventManager.RemoveListener(_parent, this);
-
         }
 
         #endregion

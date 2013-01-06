@@ -99,37 +99,47 @@ namespace Avmt.Test
 
         #endregion
 
+        #region 公共方法
+
         public static Guid AddChild(FrameworkElement parent, UIElement element)
         {
             var id = Guid.NewGuid();
-            var listener = new BusyWeakEventListener(parent, element, id, );
+            var listener = new BusyWeakEventListener(parent, element, id);
             _childrenListeners.Add(listener);
             return id;
         }
 
+        public static void AddChild(BusyWeakEventListener listener)
+        {
+            var parent = listener.Parent;
+            var element = listener.Element;
+            var id = listener.Id;
+            var root = parent.VisualAncestors().OfType<UIElement>().LastOrDefault();
+            if (null != root)
+            {
+                var transform = parent.TransformToAncestor(root);
+                var bounds = transform.TransformBounds(new Rect(parent.RenderSize));
+                var host = GetHost(parent);
+
+                if (null != host)
+                {
+                    host.AddChild(element, id, bounds);
+                }
+
+                List<Guid> children;
+                if (!_childrenMap.TryGetValue(parent, out children))
+                {
+                    children = new List<Guid>();
+                    _childrenMap.Add(parent, children);
+                }
+
+                children.Add(id);
+            }
+        }
+
+        #endregion
+
         #region 私有方法
-
-        private void IsVisibleChanged(object sender, IsVisibleChangedEventArgs e)
-        {
-            if (e.IsVisible)
-            {
-                //OnAddChild();
-            }
-            else
-            {
-                //OnRemoveChild();
-            }
-        }
-
-        private void Loaded(object sender, RoutedEventArgs e)
-        {
-            //OnAddChild();
-        }
-
-        private void SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-
-        }
 
         #endregion
     }
