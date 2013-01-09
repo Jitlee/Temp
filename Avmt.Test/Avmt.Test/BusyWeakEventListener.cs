@@ -28,6 +28,8 @@ namespace Avmt.Test
             _element = element;
             _id = id;
 
+            BackgroundVisualHost.AddChild(this);
+
             IsVisibleWeakEventManager.AddListener(_parent, this);
             LoadedWeakEventManager.AddListener(_parent, this);
             SizeChangedWeakEventManager.AddListener(_parent, this);
@@ -83,10 +85,15 @@ namespace Avmt.Test
 
         public void Disopse()
         {
-            //OnRemoveChild();
+            BackgroundVisualHost.RemoveChild(this);
             IsVisibleWeakEventManager.RemoveListener(_parent, this);
             SizeChangedWeakEventManager.RemoveListener(_parent, this);
             LoadedWeakEventManager.RemoveListener(_parent, this);
+        }
+
+        public void InvalidateArrage()
+        {
+            _parent.InvalidateArrange();
         }
 
         #endregion
@@ -97,22 +104,22 @@ namespace Avmt.Test
         {
             if (e.IsVisible)
             {
-                //OnAddChild();
+                BackgroundVisualHost.AddChild(this);
             }
             else
             {
-                //OnRemoveChild();
+                BackgroundVisualHost.RemoveChild(this);
             }
         }
 
         private void Loaded(object sender, RoutedEventArgs e)
         {
-            //OnAddChild();
+            BackgroundVisualHost.AddChild(this);
         }
 
         private void SizeChanged(object sender, SizeChangedEventArgs e)
         {
-
+            BackgroundVisualHost.ResizeChild(sender as FrameworkElement);
         }
 
         #endregion

@@ -41,6 +41,7 @@ namespace Avmt.Test
 
         protected override Size ArrangeOverride(Size finalSize)
         {
+            BackgroundVisualHost.InvalidateArrange(_children);
             return base.ArrangeOverride(finalSize);
         }
 
@@ -81,6 +82,54 @@ namespace Avmt.Test
                 {
                     _root.Children.Add(element);
 
+                }
+            }));
+        }
+
+        public void RemoveChild(Guid id)
+        {
+            Dispatcher.BeginInvoke(new Action(() => {
+                var child = _root.Children
+                    .OfType<UIElement>()
+                    .FirstOrDefault(c => BackgroundVisualHost.GetElementId(c) == id);
+
+                if (null != child)
+                {
+                    _children.Remove(id);
+                    _root.Children.Remove(child);
+                }
+            }));
+        }
+
+        public void Resize(Guid id, Size size)
+        {
+            PeformAction(id, (child) =>
+            {
+                child.SetCurrentValue(FrameworkElement.WidthProperty, size.Width);
+                child.SetCurrentValue(FrameworkElement.HeightProperty, size.Height);
+            });
+        }
+
+        public void Move(Guid id, Point location)
+        {
+            PeformAction(id, (child) =>
+            {
+                Canvas.SetLeft(child, location.X);
+                Canvas.SetTop(child, location.Y);
+            });
+        }
+
+        public void PeformAction(Guid id, Action<UIElement> action)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                var child = _root.Children
+                    .OfType<UIElement>()
+                    .FirstOrDefault(c => BackgroundVisualHost.GetElementId(c) == id);
+
+                if (null != child)
+                {
+                    action(child);
                 }
             }));
         }

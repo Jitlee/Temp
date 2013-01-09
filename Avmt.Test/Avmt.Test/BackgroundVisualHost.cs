@@ -26,7 +26,7 @@ namespace Avmt.Test
         private static readonly DependencyProperty ElementIdProperty = ElementIdPropertyKey.DependencyProperty;
 
         [AttachedPropertyBrowsableForType(typeof(UIElement))]
-        private static Guid GetElementId(UIElement obj)
+        public static Guid GetElementId(UIElement obj)
         {
             return (Guid)obj.GetValue(ElementIdProperty);
         }
@@ -61,8 +61,6 @@ namespace Avmt.Test
         }
 
         #endregion
-
-
 
         #endregion
 
@@ -109,6 +107,19 @@ namespace Avmt.Test
             return id;
         }
 
+        public static void RemoveChild(FrameworkElement parent, Guid elementId)
+        {
+            _childrenListeners.RemoveWhere(c => 
+            {
+                if (c.Id == elementId)
+                {
+                    c.Disopse(); 
+                    return true;
+                } 
+                return false; 
+            });
+        }
+
         public static void AddChild(BusyWeakEventListener listener)
         {
             var parent = listener.Parent;
@@ -134,6 +145,71 @@ namespace Avmt.Test
                 }
 
                 children.Add(id);
+            }
+        }
+
+        public static void RemoveChild(BusyWeakEventListener listener)
+        {
+            var host = GetHost(listener.Parent);
+            if (null != host)
+            {
+                host.RemoveChild(listener.Id);
+            }
+
+            List<Guid> children;
+            if (_childrenMap.TryGetValue(listener.Parent, out children))
+            {
+                children.Remove(listener.Id);
+                if (children.Count == 0)
+                {
+                    _childrenMap.Remove(listener.Parent);
+                }
+            }
+        }
+
+        public static void ResizeChild(FrameworkElement parent)
+        {
+            var host = GetHost(parent);
+            if (null != host)
+            {
+                var size = parent.DesiredSize;
+                foreach (var id in _childrenMap[parent])
+                {
+                    host.Resize(id, size);
+                }
+            }
+        }
+
+        public static void WindowPositionChanged(FrameworkElement parent, Point location)
+        {
+            var host = GetHost(parent);
+            if (null != host && _childrenMap.ContainsKey(parent))
+            {
+                foreach (var id in _childrenMap[parent])
+                {
+                    host.Move(id, location);
+                }
+            }
+        }
+
+        public static void InvalidateArrange(HashSet<Guid> children)
+        {
+            foreach (var id in children)
+            {
+                var listener = _childrenListeners.FirstOrDefault(l => l.Id == id);
+                if (null != listener)
+                {
+                    listener.InvalidateArrage();
+                }
+            }
+        }
+
+        public static void DispatchAction(FrameworkElement parent, Guid id, Action<UIElement> action)
+        {
+            var host = GetHost(parent);
+            if (null != host)
+            {
+                host.PeformAction(id, action);
             }
         }
 

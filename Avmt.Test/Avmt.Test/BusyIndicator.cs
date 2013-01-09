@@ -4,13 +4,69 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace Avmt.Test
 {
     [StyleTypedProperty(Property = "Style", StyleTargetType = typeof(Control))]
     public class BusyIndicator : Decorator
     {
+        private Guid _backgroundChildId = Guid.Empty;
+
         #region 属性
+
+        #region IsBusying
+
+        public static DependencyProperty IsBusyingProperty =
+            DependencyProperty.Register("IsBusying",
+            typeof(bool),
+            typeof(BusyIndicator),
+            new FrameworkPropertyMetadata(
+                false,
+                FrameworkPropertyMetadataOptions.AffectsMeasure,
+                OnIsBusyingChanged));
+
+        public bool IsBusying
+        {
+            get { return (bool)GetValue(IsBusyingProperty); }
+            set { SetValue(IsBusyingProperty, value); }
+        }
+
+        private static void OnIsBusyingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var element = d as BusyIndicator;
+            if (null != element)
+            {
+                var isBusying = (bool)e.NewValue;
+
+                if (isBusying)
+                {
+                    element._backgroundChildId = BackgroundVisualHost.AddChild(element,
+                        new Control()
+                        {
+                            HorizontalAlignment = element.HorizontalAlignment,
+                            VerticalAlignment = element.VerticalAlignment,
+                            Margin = element.Margin
+                        });
+                }
+                else
+                {
+                    BackgroundVisualHost.RemoveChild(element, element._backgroundChildId);
+                }
+
+                if (!element.IsEnabledWhenBusying)
+                {
+                    element.SetIndicatorProperty(IsEnabledProperty, !isBusying);
+                }
+
+                if (null != element.Child)
+                {
+                    AnimationChildOpcatiy(isBusying, element.Child, element.FadeTime);
+                }
+            }
+        }
+
+        #endregion
 
         #region Style
 
@@ -35,7 +91,12 @@ namespace Avmt.Test
             var element = d as BusyIndicator;
             if(null != element)
             {
-
+                var style = e.NewValue as Style;
+                if (null != style)
+                {
+                    style.Seal();
+                }
+                element.SetIndicatorProperty(Control.StyleProperty, style);
             }
         }
 
@@ -48,7 +109,7 @@ namespace Avmt.Test
             "HorizontalAlignment",
             typeof(HorizontalAlignment),
             typeof(BusyIndicator),
-            new FrameworkPropertyMetadata(OnHorizontalAlignmentPropertyChanged));
+            new FrameworkPropertyMetadata(HorizontalAlignment.Center, OnHorizontalAlignmentPropertyChanged));
 
         /// <summary>
         /// 获取或设置加载动画控件的样式
@@ -64,7 +125,7 @@ namespace Avmt.Test
             var element = d as BusyIndicator;
             if (null != element)
             {
-
+                element.SetIndicatorProperty(e.Property, e.NewValue);
             }
         }
 
@@ -77,7 +138,7 @@ namespace Avmt.Test
             "VerticalAlignment",
             typeof(VerticalAlignment),
             typeof(BusyIndicator),
-            new FrameworkPropertyMetadata(OnVerticalAlignmentPropertyChanged));
+            new FrameworkPropertyMetadata(VerticalAlignment.Center, OnVerticalAlignmentPropertyChanged));
 
         /// <summary>
         /// 获取或设置加载动画控件的样式
@@ -93,7 +154,7 @@ namespace Avmt.Test
             var element = d as BusyIndicator;
             if (null != element)
             {
-
+                element.SetIndicatorProperty(e.Property, e.NewValue);
             }
         }
 
@@ -106,7 +167,7 @@ namespace Avmt.Test
             "Margin",
             typeof(Thickness),
             typeof(BusyIndicator),
-            new FrameworkPropertyMetadata(OnMarginPropertyChanged));
+            new FrameworkPropertyMetadata(new Thickness(0d), OnMarginPropertyChanged));
 
         /// <summary>
         /// 获取或设置加载动画控件的样式
@@ -122,64 +183,30 @@ namespace Avmt.Test
             var element = d as BusyIndicator;
             if (null != element)
             {
-
+                element.SetIndicatorProperty(e.Property, e.NewValue);
             }
         }
 
         #endregion
 
-        #region Opacity
+        #region OpacityWhenBusy
 
-        public static readonly new DependencyProperty OpacityProperty =
-            DependencyProperty.Register(
-            "Opacity",
-            typeof(double),
+        public static readonly DependencyProperty OpacityWhenBusyProperty =
+            DependencyProperty.RegisterAttached(
+            "OpacityWhenBusy",
+            typeof(double?),
             typeof(BusyIndicator),
-            new FrameworkPropertyMetadata(OnOpacityPropertyChanged));
+            new FrameworkPropertyMetadata(0.5));
 
-        /// <summary>
-        /// 获取或设置加载动画控件的样式
-        /// </summary>
-        public new double Opacity
+        [AttachedPropertyBrowsableForChildren]
+        public static double? GetOpacityWhenBusy(UIElement obj)
         {
-            get { return (double)GetValue(OpacityProperty); }
-            set { SetValue(OpacityProperty, value); }
+            return (double?)obj.GetValue(OpacityWhenBusyProperty);
         }
 
-        private static void OnOpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static void SetOpacityWhenBusy(UIElement obj, double? value)
         {
-            var element = d as BusyIndicator;
-            if (null != element)
-            {
-
-            }
-        }
-
-        #endregion
-
-        #region IsBusying
-
-        public static DependencyProperty IsBusyingProperty =
-            DependencyProperty.Register("IsBusying",
-            typeof(bool),
-            typeof(BusyIndicator),
-            new FrameworkPropertyMetadata(
-                false,
-                FrameworkPropertyMetadataOptions.AffectsMeasure,
-                OnIsBusyingChanged));
-
-        public bool IsBusying
-        {
-            get { return (bool)GetValue(IsBusyingProperty); }
-            set { SetValue(IsBusyingProperty, value); }
-        }
-
-        private static void OnIsBusyingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var element = d as BusyIndicator;
-            if (null != element)
-            {
-            }
+            obj.SetValue(OpacityWhenBusyProperty, value);
         }
 
         #endregion
@@ -204,8 +231,9 @@ namespace Avmt.Test
         private static void OnIsEnabledWhenBusyingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var element = d as BusyIndicator;
-            if (null != element)
+            if (null != element && element.IsBusying)
             {
+                element.SetIndicatorProperty(IsEnabledProperty, e.NewValue);
             }
         }
 
@@ -219,9 +247,16 @@ namespace Avmt.Test
             typeof(BusyIndicator),
             new FrameworkPropertyMetadata(TimeSpan.FromSeconds(.5)));
 
+        public TimeSpan FadeTime
+        {
+            get { return (TimeSpan)GetValue(FadeTimeProperty); }
+            set { SetValue(FadeTimeProperty, value); }
+        }
+
         #endregion
 
         #endregion
+
         #region 构造函数
 
         static BusyIndicator()
@@ -231,6 +266,73 @@ namespace Avmt.Test
                 new FrameworkPropertyMetadata(typeof(BusyIndicator)));
         }
 
+        public BusyIndicator()
+        {
+            this.Loaded += BusyIndicator_Loaded;
+        }
+
         #endregion
+
+        #region 重载方法
+
+        protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
+        {
+            base.OnVisualChildrenChanged(visualAdded, visualRemoved);
+
+            if (visualAdded is UIElement)
+            {
+                AnimationChildOpcatiy(IsBusying, visualAdded as UIElement, FadeTime);
+            }
+        }
+
+        protected override Size ArrangeOverride(Size arrangeSize)
+        {
+            if (_backgroundChildId != Guid.Empty && IsLoaded)
+            {
+                Dispatcher.BeginInvoke(new Action(UpdateWindowPosition));
+            }
+            return base.ArrangeOverride(arrangeSize);
+        }
+
+        #endregion
+
+        private void BusyIndicator_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateWindowPosition();
+        }
+
+        private void UpdateWindowPosition()
+        {
+            var root = this.VisualAncestors().OfType<UIElement>().LastOrDefault();
+            if (null != root)
+            {
+                BackgroundVisualHost.WindowPositionChanged(this, this.TranslatePoint(new Point(), root));
+            }
+        }
+
+        private static void AnimationChildOpcatiy(bool isBusying, UIElement child, TimeSpan fadeTime)
+        {
+            var opacityWhenBusy = GetOpacityWhenBusy(child);
+            if (opacityWhenBusy.HasValue)
+            {
+                var animation = new DoubleAnimation();
+                animation.Duration = new Duration(fadeTime);
+
+                if (isBusying)
+                {
+                    animation.To = opacityWhenBusy;
+                }
+
+                child.BeginAnimation(OpacityProperty, animation);
+            }
+        }
+
+        private void SetIndicatorProperty(DependencyProperty property, object value)
+        {
+            if (_backgroundChildId != Guid.Empty)
+            {
+                BackgroundVisualHost.DispatchAction(this, _backgroundChildId, (child) => { child.SetValue(property, value); });
+            }
+        }
     }
 }

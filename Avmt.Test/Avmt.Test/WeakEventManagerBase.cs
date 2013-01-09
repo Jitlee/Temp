@@ -15,7 +15,7 @@ namespace Avmt.Test
             get
             {
                 var manager = WeakEventManager.GetCurrentManager(typeof(TManager)) as TManager;
-                if (null != manager)
+                if (null == manager)
                 {
                     manager = new TManager();
                     WeakEventManager.SetCurrentManager(typeof(TManager), manager);

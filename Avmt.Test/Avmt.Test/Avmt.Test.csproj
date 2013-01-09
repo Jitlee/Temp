@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdornerTest.xaml.cs">
+      <DependentUpon>AdornerTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BusyWeakEventListener.cs" />
     <Compile Include="BackgroundVisualHost.cs" />
     <Compile Include="BusyAdornerDecorator.cs" />
@@ -65,6 +68,10 @@
     <Compile Include="VisualTargetPresentationSource.cs" />
     <Compile Include="WeakEventManagerBase.cs" />
     <Compile Include="WindowBackgroundVisualHost.cs" />
+    <Page Include="AdornerTest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
