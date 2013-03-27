@@ -71,6 +71,7 @@
     <Compile Include="Buttons\CloseButton.cs" />
     <Compile Include="Buttons\DropDownButton.cs" />
     <Compile Include="Buttons\TopmostButton.cs" />
+    <Compile Include="Layouts\DockPanel.cs" />
     <Compile Include="Layouts\LayoutGroup.cs" />
     <Compile Include="Layouts\LayoutGroupItem.cs" />
     <Compile Include="Layouts\Panel.cs" />

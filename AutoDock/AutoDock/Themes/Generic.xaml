@@ -26,6 +26,8 @@
     <SolidColorBrush x:Key="LayoutGroupItemBackground" Color="#FF515151" />
     <SolidColorBrush x:Key="LayoutGroupItemBorderBrush" Color="Transparent" />
     <SolidColorBrush x:Key="LayoutGroupSelectedItemBackground" Color="#FF333333" />
+    <SolidColorBrush x:Key="LayoutGroupHoverItemBackground" Color="#FF666666" />
+    <SolidColorBrush x:Key="LayoutGroupSelectedItemForeground" Color="#FFF78A09" />
     
     <Storyboard x:Key="LayoutGotFocusStoryboard">
         <ColorAnimation Storyboard.TargetProperty="Background.Color" To="{StaticResource LayoutLightBackgroundColor}" Duration="0:0:0"/>
@@ -213,8 +215,12 @@
                             RecognizesAccessKey="True"/>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource LayoutGroupHoverItemBackground}"/>
+                        </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{StaticResource LayoutGroupSelectedItemBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource LayoutGroupSelectedItemForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -270,7 +276,6 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
                             <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Border
                             x:Name="TitleBackgroundBottom"
@@ -295,18 +300,36 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             RenderOptions.EdgeMode="Aliased">
-                            <ContentPresenter
-                                x:Name="PART_SelectedContentHost"
-                                ContentSource="SelectedContent"
-                                VerticalAlignment="Stretch"
-                                HorizontalAlignment="Stretch"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <ContentPresenter
+                                    x:Name="PART_SelectedContentHost"
+                                    ContentSource="SelectedContent"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"/>
+                                <TabPanel
+                                    x:Name="HeaderPanel"
+                                    Canvas.ZIndex="1"
+                                    Grid.Row="2"
+                                    IsItemsHost="True"
+                                    Background="{StaticResource LayoutBackground}"/>
+                            </Grid>
                         </Border>
-                        <TabPanel
-                            x:Name="HeaderPanel"
-                            Canvas.ZIndex="1"
-                            Grid.Row="2"
-                            IsItemsHost="True"
-                            Background="{StaticResource LayoutBackground}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type layouts:DockPanel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type layouts:DockPanel}">
+                    <Grid>
+                        <Canvas x:Name="PART_Canvas"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
