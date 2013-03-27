@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace AutoDock.Buttons
 {
-    public class CloseButton : Button
+    public class WTopmostButton : Button
     {
-        static CloseButton()
+        static WTopmostButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
-                typeof(CloseButton),
+                typeof(WTopmostButton),
                 new FrameworkPropertyMetadata(
-                    typeof(CloseButton)));
+                    typeof(WTopmostButton)));
         }
     }
 }

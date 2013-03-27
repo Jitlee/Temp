@@ -48,10 +48,10 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
 
-    <Style TargetType="{x:Type buttons:CloseButton}" BasedOn="{StaticResource ButtonStyle}">
+    <Style TargetType="{x:Type buttons:WCloseButton}" BasedOn="{StaticResource ButtonStyle}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type buttons:CloseButton}">
+                <ControlTemplate TargetType="{x:Type buttons:WCloseButton}">
                     <Border
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -66,7 +66,7 @@
                               Width="9.5"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:Layout}}}" Value="True">
+                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockContent}}}" Value="True">
                             <Setter Property="Foreground" Value="{StaticResource ButtonLightForeground}"/>
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -78,10 +78,10 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type buttons:TopmostButton}" BasedOn="{StaticResource ButtonStyle}">
+    <Style TargetType="{x:Type buttons:WTopmostButton}" BasedOn="{StaticResource ButtonStyle}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type buttons:TopmostButton}">
+                <ControlTemplate TargetType="{x:Type buttons:WTopmostButton}">
                     <Border
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -98,7 +98,7 @@
                               Width="8"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:Layout}}}" Value="True">
+                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockContent}}}" Value="True">
                             <Setter Property="Foreground" Value="{StaticResource ButtonLightForeground}"/>
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -110,10 +110,10 @@
         </Setter>
     </Style>
     
-    <Style TargetType="{x:Type buttons:DropDownButton}" BasedOn="{StaticResource ButtonStyle}">
+    <Style TargetType="{x:Type buttons:WDropDownButton}" BasedOn="{StaticResource ButtonStyle}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type buttons:DropDownButton}">
+                <ControlTemplate TargetType="{x:Type buttons:WDropDownButton}">
                     <Border
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -128,7 +128,7 @@
                               Width="8"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:Layout}}}" Value="True">
+                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockContent}}}" Value="True">
                             <Setter Property="Foreground" Value="{StaticResource ButtonLightForeground}"/>
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -140,7 +140,7 @@
         </Setter>
     </Style>
     
-    <Style TargetType="{x:Type layouts:Layout}">
+    <Style TargetType="{x:Type layouts:WDockContent}">
         <Setter Property="Background" Value="{StaticResource LayoutBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource LayoutBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1,0,1,1"/>
@@ -148,7 +148,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type layouts:Layout}">
+                <ControlTemplate TargetType="{x:Type layouts:WDockContent}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
@@ -167,8 +167,8 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Orientation="Horizontal">
-                            <buttons:TopmostButton x:Name="TopmostButton"/>
-                            <buttons:CloseButton x:Name="CloseButton"/>
+                            <buttons:WTopmostButton x:Name="TopmostButton"/>
+                            <buttons:WCloseButton x:Name="CloseButton"/>
                         </StackPanel>
                         <Border
                             Grid.Row="1"
@@ -191,7 +191,7 @@
         </Setter>        
     </Style>
     
-    <Style TargetType="{x:Type layouts:LayoutGroupItem}">
+    <!--<Style TargetType="{x:Type layouts:WLayoutGroupItem}">
         <Setter Property="Background" Value="{StaticResource LayoutGroupItemBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource LayoutGroupItemBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1,0,1,1"/>
@@ -204,7 +204,7 @@
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type layouts:LayoutGroupItem}">
+                <ControlTemplate TargetType="{x:Type layouts:WLayoutGroupItem}">
                     <Border
                         Background="{TemplateBinding Background}">
                         <ContentPresenter
@@ -226,9 +226,9 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
     
-    <Style TargetType="{x:Type layouts:LayoutGroup}">
+    <!--<Style TargetType="{x:Type layouts:WLayoutGroup}">
         <Setter Property="Background" Value="{StaticResource LayoutBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource LayoutBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1,0,1,1"/>
@@ -236,8 +236,8 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type layouts:LayoutGroup}">
-                    <!--<Grid>
+                <ControlTemplate TargetType="{x:Type layouts:WLayoutGroup}">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
                             <RowDefinition/>
@@ -271,7 +271,7 @@
                         <EventTrigger RoutedEvent="LostFocus">
                             <BeginStoryboard Storyboard="{StaticResource LayoutLostFocusStoryboard}"/>
                         </EventTrigger>
-                    </ControlTemplate.Triggers>-->
+                    </ControlTemplate.Triggers>
                     <Grid x:Name="TemplateGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
@@ -292,8 +292,8 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Orientation="Horizontal">
-                            <buttons:TopmostButton/>
-                            <buttons:CloseButton/>
+                            <buttons:WTopmostButton/>
+                            <buttons:WCloseButton/>
                         </StackPanel>
                         <Border
                             Grid.Row="1"
@@ -322,17 +322,78 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
-    <Style TargetType="{x:Type layouts:DockPanel}">
+    <Style TargetType="{x:Type layouts:WDockPanel}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type layouts:DockPanel}">
+                <ControlTemplate TargetType="{x:Type layouts:WDockPanel}">
                     <Grid>
+                        <Grid x:Name="PART_Grid"/>
                         <Canvas x:Name="PART_Canvas"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type layouts:WDockedGroup}">
+        <Setter Property="Background" Value="{StaticResource LayoutBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LayoutBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1,0,1,1"/>
+        <Setter Property="Foreground" Value="{StaticResource LayoutForeground}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type layouts:WDockedGroup}">
+                    <Grid x:Name="TemplateGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border
+                            x:Name="TitleBackgroundBottom"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            RenderOptions.EdgeMode="Aliased"/>
+                        <ContentControl
+                            x:Name="TitleBottom"
+                            Margin="5,0"
+                            VerticalAlignment="Center"
+                            RenderOptions.EdgeMode="Aliased"
+                            Content="{Binding Path=SelectedItem.Header, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <buttons:WTopmostButton/>
+                            <buttons:WCloseButton/>
+                        </StackPanel>
+                        <Border
+                            Grid.Row="1"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            RenderOptions.EdgeMode="Aliased">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <ContentPresenter
+                                    x:Name="PART_SelectedContentHost"
+                                    ContentSource="SelectedContent"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"/>
+                                <StackPanel
+                                    x:Name="PART_Tab"
+                                    Orientation="Horizontal">
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>

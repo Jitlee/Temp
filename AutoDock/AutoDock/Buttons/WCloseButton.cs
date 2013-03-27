@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace AutoDock.Buttons
 {
-    public class DropDownButton : Button
+    public class WCloseButton : Button
     {
-        static DropDownButton()
+        static WCloseButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
-                typeof(DropDownButton),
+                typeof(WCloseButton),
                 new FrameworkPropertyMetadata(
-                    typeof(DropDownButton)));
+                    typeof(WCloseButton)));
         }
     }
 }

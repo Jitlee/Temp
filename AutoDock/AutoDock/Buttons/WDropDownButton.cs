@@ -7,14 +7,14 @@ using System.Windows;
 
 namespace AutoDock.Buttons
 {
-    public class TopmostButton : Button
+    public class WDropDownButton : Button
     {
-        static TopmostButton()
+        static WDropDownButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
-                typeof(TopmostButton),
+                typeof(WDropDownButton),
                 new FrameworkPropertyMetadata(
-                    typeof(TopmostButton)));
+                    typeof(WDropDownButton)));
         }
     }
 }

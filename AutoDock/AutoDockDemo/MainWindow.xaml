@@ -5,24 +5,11 @@
         Title="MainWindow" Height="412" Width="751"
         Background="#FF333333">
     <Grid>
-        <!--<layouts:Layout Margin="229,0,300,174"  Height="200" Width="200">
-            <Button Height="126" Width="313" />
-        </layouts:Layout>
-        <layouts:Layout Margin="12,12,517,161" Height="200" Width="200">
-            <Button Height="126" Width="313" />
-        </layouts:Layout>
-        <layouts:LayoutGroup Height="200" Margin="464,100,65,73" Width="200" TabStripPlacement="Bottom">
-            <layouts:LayoutGroupItem Header="万品佳">
-                <Button Content="1" />
-            </layouts:LayoutGroupItem>
-            <layouts:LayoutGroupItem Header="万品佳2">
-                <Button Content="2" />
-            </layouts:LayoutGroupItem>
-        </layouts:LayoutGroup>-->
-        
-        <layouts:DockPanel>
-            <layouts:Layout Height="150" Width="200"/>
-            <layouts:Layout Height="150" Width="200"/>
-        </layouts:DockPanel>
+        <layouts:WDockPanel>
+            <layouts:WDockedGroup>
+                <layouts:WDockContent Height="150" Width="200"/>
+                <layouts:WDockContent Height="150" Width="200"/>
+            </layouts:WDockedGroup>
+        </layouts:WDockPanel>
     </Grid>
 </Window>

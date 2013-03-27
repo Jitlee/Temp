@@ -68,13 +68,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Buttons\CloseButton.cs" />
-    <Compile Include="Buttons\DropDownButton.cs" />
-    <Compile Include="Buttons\TopmostButton.cs" />
-    <Compile Include="Layouts\DockPanel.cs" />
-    <Compile Include="Layouts\LayoutGroup.cs" />
-    <Compile Include="Layouts\LayoutGroupItem.cs" />
-    <Compile Include="Layouts\Panel.cs" />
+    <Compile Include="Buttons\WCloseButton.cs" />
+    <Compile Include="Buttons\WDropDownButton.cs" />
+    <Compile Include="Buttons\WTopmostButton.cs" />
+    <Compile Include="Layouts\WDockContentBase.cs" />
+    <Compile Include="Layouts\WDockGroup.cs" />
+    <Compile Include="Layouts\WDockPanel.cs" />
+    <Compile Include="Layouts\WDockState.cs" />
+    <Compile Include="Layouts\WDockedGroup.cs" />
+    <Compile Include="Layouts\WDockContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
