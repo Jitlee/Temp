@@ -1,10 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace AutoDock.Layouts
 {
-    public class WDockContent : WDockContentBase
+    [ContentProperty("Content")]
+    public sealed class WDockContent : WDockLayoutBase
     {
         #region 变量
 
@@ -12,20 +14,34 @@ namespace AutoDock.Layouts
 
         #region 属性
 
-        
+        #region Header Property
 
-        #region Title Property
-
-        public static DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title",
-            typeof(string),
+        public static DependencyProperty HeaderProperty =
+            DependencyProperty.Register("Header",
+            typeof(object),
             typeof(WDockContent),
             new PropertyMetadata("Auto dock panel"));
 
-        public string Title
+        public object Header
         {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
+            get { return GetValue(HeaderProperty); }
+            set { SetValue(HeaderProperty, value); }
+        }
+
+        #endregion
+
+        #region Content Property
+
+        public static DependencyProperty ContentProperty =
+            DependencyProperty.Register("Content",
+            typeof(object),
+            typeof(WDockContent),
+            null);
+
+        public object Content
+        {
+            get { return GetValue(ContentProperty); }
+            set { SetValue(ContentProperty, value); }
         }
 
         #endregion

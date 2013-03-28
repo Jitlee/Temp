@@ -5,11 +5,39 @@
         Title="MainWindow" Height="412" Width="751"
         Background="#FF333333">
     <Grid>
-        <layouts:WDockPanel>
-            <layouts:WDockedGroup>
-                <layouts:WDockContent Height="150" Width="200"/>
-                <layouts:WDockContent Height="150" Width="200"/>
+        <layouts:WDockLayoutManager>
+            
+            <layouts:WDockContent Height="150" Width="100" Header="最下边" Dock="Bottom">
+                <Button Content="最下边"/>
+            </layouts:WDockContent>
+            
+            <layouts:WDockedGroup Width="100" Height="100">
+                <layouts:WDockContent Height="150" Width="100" Header="万品佳1">
+                    <Button Content="按钮1"/>
+                </layouts:WDockContent>
+                <layouts:WDockContent Height="150" Width="100" Header="万品佳2">
+                    <Button Content="按钮2"/>
+                </layouts:WDockContent>
             </layouts:WDockedGroup>
-        </layouts:WDockPanel>
+
+            <layouts:WDockedGroup Width="100" Height="100" Dock="Top">
+                <layouts:WDockContent Height="150" Width="100" Header="万品佳5">
+                    <Button Content="按钮5"/>
+                </layouts:WDockContent>
+                <layouts:WDockContent Height="150" Width="100" Header="万品佳6">
+                    <Button Content="按钮6"/>
+                </layouts:WDockContent>
+            </layouts:WDockedGroup>
+
+            <layouts:WDockedGroup Width="100" Height="200" Dock="Right">
+                <layouts:WDockContent Height="150" Width="100" Header="万品佳3">
+                    <Button Content="按钮3"/>
+                </layouts:WDockContent>
+                <layouts:WDockContent Height="150" Width="100" Header="万品佳4">
+                    <Button Content="按钮4"/>
+                </layouts:WDockContent>
+            </layouts:WDockedGroup>
+            
+        </layouts:WDockLayoutManager>
     </Grid>
 </Window>

@@ -11,32 +11,25 @@
     <SolidColorBrush x:Key="ButtonHoverBorderBrush" Color="#FF515151" />
     <SolidColorBrush x:Key="ButtonBackground" Color="Transparent" />
 
-    <Color x:Key="LayoutBackgroundColor">#FF515151</Color>
-    <Color x:Key="LayoutLightBackgroundColor">#FFF78A09</Color>
-    <Color x:Key="LayoutLightColor">#FFCCCCCC</Color>
-    <Color x:Key="LayoutForegroundColor">#FF929292</Color>
-    <Color x:Key="LayoutLightForegroundColor">#FF333333</Color>
-    <SolidColorBrush x:Key="LayoutBackground" Color="{StaticResource LayoutBackgroundColor}" />
-    <SolidColorBrush x:Key="LayoutLightBackground" Color="{StaticResource LayoutLightBackgroundColor}" />
-    <SolidColorBrush x:Key="LayoutBorderBrush" Color="#FF515151" />
-    <SolidColorBrush x:Key="LayoutLightBorderBrush" Color="#FFF78A09" />
-    <SolidColorBrush x:Key="LayoutForeground" Color="{StaticResource LayoutForegroundColor}"/>
-    <SolidColorBrush x:Key="LayoutLightForeground" Color="{StaticResource LayoutLightForegroundColor}"/>
-    
-    <SolidColorBrush x:Key="LayoutGroupItemBackground" Color="#FF515151" />
-    <SolidColorBrush x:Key="LayoutGroupItemBorderBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="LayoutGroupSelectedItemBackground" Color="#FF333333" />
-    <SolidColorBrush x:Key="LayoutGroupHoverItemBackground" Color="#FF666666" />
-    <SolidColorBrush x:Key="LayoutGroupSelectedItemForeground" Color="#FFF78A09" />
-    
-    <Storyboard x:Key="LayoutGotFocusStoryboard">
-        <ColorAnimation Storyboard.TargetProperty="Background.Color" To="{StaticResource LayoutLightBackgroundColor}" Duration="0:0:0"/>
-        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" To="{StaticResource LayoutLightForegroundColor}" Duration="0:0:0"/>
-    </Storyboard>
-    <Storyboard x:Key="LayoutLostFocusStoryboard">
-        <ColorAnimation Storyboard.TargetProperty="Background.Color" To="{StaticResource LayoutBackgroundColor}" Duration="0:0:0"/>
-        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" To="{StaticResource LayoutForegroundColor}" Duration="0:0:0"/>
-    </Storyboard>
+    <Color x:Key="WDockBackgroundColor">#FF515151</Color>
+    <Color x:Key="WDockLightBackgroundColor">#FFF78A09</Color>
+    <Color x:Key="WDockLightColor">#FFCCCCCC</Color>
+    <Color x:Key="WDockForegroundColor">#FF929292</Color>
+    <Color x:Key="WDockLightForegroundColor">#FF333333</Color>
+    <SolidColorBrush x:Key="WDockBackground" Color="{StaticResource WDockBackgroundColor}" />
+    <SolidColorBrush x:Key="WDockLightBackground" Color="{StaticResource WDockLightBackgroundColor}" />
+    <SolidColorBrush x:Key="WDockBorderBrush" Color="#FF515151" />
+    <SolidColorBrush x:Key="WDockLightBorderBrush" Color="#FFF78A09" />
+    <SolidColorBrush x:Key="WDockForeground" Color="{StaticResource WDockForegroundColor}"/>
+    <SolidColorBrush x:Key="WDockLightForeground" Color="{StaticResource WDockLightForegroundColor}"/>
+
+
+    <SolidColorBrush x:Key="WDockedGroupItemBackground" Color="#FF515151" />
+    <SolidColorBrush x:Key="WDockedGroupItemBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="WDockedGroupSelectedItemBackground" Color="#FF333333" />
+    <SolidColorBrush x:Key="WDockedGroupHoverItemBackground" Color="#FF666666" />
+    <SolidColorBrush x:Key="WDockedGroupItemForeground" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="WDockedGroupSelectedItemForeground" Color="#FFF78A09" />
 
     <Style x:Key="ButtonStyle" TargetType="Button">
         <Setter Property="Height" Value="16"/>
@@ -66,7 +59,7 @@
                               Width="9.5"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockContent}}}" Value="True">
+                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockBase}}}" Value="True">
                             <Setter Property="Foreground" Value="{StaticResource ButtonLightForeground}"/>
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -98,7 +91,7 @@
                               Width="8"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockContent}}}" Value="True">
+                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockBase}}}" Value="True">
                             <Setter Property="Foreground" Value="{StaticResource ButtonLightForeground}"/>
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -128,7 +121,7 @@
                               Width="8"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockContent}}}" Value="True">
+                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockBase}}}" Value="True">
                             <Setter Property="Foreground" Value="{StaticResource ButtonLightForeground}"/>
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -141,10 +134,10 @@
     </Style>
     
     <Style TargetType="{x:Type layouts:WDockContent}">
-        <Setter Property="Background" Value="{StaticResource LayoutBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LayoutBorderBrush}"/>
+        <Setter Property="Background" Value="{StaticResource WDockBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WDockBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1,0,1,1"/>
-        <Setter Property="Foreground" Value="{StaticResource LayoutForeground}"/>
+        <Setter Property="Foreground" Value="{StaticResource WDockForeground}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -158,9 +151,9 @@
                             Background="{TemplateBinding Background}"
                             BorderThickness="0"
                             RenderOptions.EdgeMode="Aliased"/>
-                        <TextBlock
+                        <ContentPresenter
                             Margin="5,0"
-                            Text="{TemplateBinding Title}"
+                            ContentSource="Header"
                             VerticalAlignment="Center"
                             RenderOptions.EdgeMode="Aliased"/>
                         <StackPanel
@@ -179,23 +172,65 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="GotFocus">
-                            <BeginStoryboard Storyboard="{StaticResource LayoutGotFocusStoryboard}"/>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="LostFocus">
-                            <BeginStoryboard Storyboard="{StaticResource LayoutLostFocusStoryboard}"/>
-                        </EventTrigger>
+                        <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource Mode=Self}}" Value="True">
+                            <Setter Property="Background" Value="{StaticResource WDockLightBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource WDockLightForeground}"/>
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>        
     </Style>
     
-    <!--<Style TargetType="{x:Type layouts:WLayoutGroupItem}">
-        <Setter Property="Background" Value="{StaticResource LayoutGroupItemBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LayoutGroupItemBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="1,0,1,1"/>
-        <Setter Property="Foreground" Value="{StaticResource LayoutForeground}"/>
+    <Style TargetType="{x:Type layouts:WDockLayoutManager}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type layouts:WDockLayoutManager}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid
+                            x:Name="PART_DockGrid"
+                            Grid.Column="1"
+                            Grid.Row="1">
+                            <layouts:WDocumentGroup
+                                x:Name="PART_DocumentGroup"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="WDockGroupPanelStyle" TargetType="ListBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <ItemsPresenter/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="WDockedGroupItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Background" Value="{StaticResource WDockedGroupItemBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WDockedGroupItemBorderBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource WDockedGroupItemForeground}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -204,164 +239,52 @@
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type layouts:WLayoutGroupItem}">
+                <ControlTemplate TargetType="ListBoxItem">
                     <Border
                         Background="{TemplateBinding Background}">
-                        <ContentPresenter
+                        <ContentControl
                             Margin="5"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            ContentSource="Header"
-                            RecognizesAccessKey="True"/>
+                            Content="{Binding Header}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource LayoutGroupHoverItemBackground}"/>
+                            <Setter Property="Background" Value="{StaticResource WDockedGroupHoverItemBackground}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource LayoutGroupSelectedItemBackground}"/>
-                            <Setter Property="Foreground" Value="{StaticResource LayoutGroupSelectedItemForeground}"/>
+                            <Setter Property="Background" Value="{StaticResource WDockedGroupSelectedItemBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource WDockedGroupSelectedItemForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
-    
-    <!--<Style TargetType="{x:Type layouts:WLayoutGroup}">
-        <Setter Property="Background" Value="{StaticResource LayoutBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LayoutBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="1,0,1,1"/>
-        <Setter Property="Foreground" Value="{StaticResource LayoutForeground}"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type layouts:WLayoutGroup}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="0"
-                            RenderOptions.EdgeMode="Aliased"/>
-                        <TextBlock
-                            Margin="5,0"
-                            VerticalAlignment="Center"
-                            RenderOptions.EdgeMode="Aliased"/>
-                        <StackPanel
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal">
-                            <buttons:TopmostButton x:Name="TopmostButton"/>
-                            <buttons:CloseButton x:Name="CloseButton"/>
-                        </StackPanel>
-                        <Border
-                            Grid.Row="1"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            RenderOptions.EdgeMode="Aliased">
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="GotFocus">
-                            <BeginStoryboard Storyboard="{StaticResource LayoutGotFocusStoryboard}"/>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="LostFocus">
-                            <BeginStoryboard Storyboard="{StaticResource LayoutLostFocusStoryboard}"/>
-                        </EventTrigger>
-                    </ControlTemplate.Triggers>
-                    <Grid x:Name="TemplateGrid">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Border
-                            x:Name="TitleBackgroundBottom"
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="0"
-                            RenderOptions.EdgeMode="Aliased"/>
-                        <ContentControl
-                            x:Name="TitleBottom"
-                            Margin="5,0"
-                            VerticalAlignment="Center"
-                            RenderOptions.EdgeMode="Aliased"
-                            Content="{Binding Path=SelectedItem.Header, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                        <StackPanel
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal">
-                            <buttons:WTopmostButton/>
-                            <buttons:WCloseButton/>
-                        </StackPanel>
-                        <Border
-                            Grid.Row="1"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            RenderOptions.EdgeMode="Aliased">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <ContentPresenter
-                                    x:Name="PART_SelectedContentHost"
-                                    ContentSource="SelectedContent"
-                                    VerticalAlignment="Stretch"
-                                    HorizontalAlignment="Stretch"/>
-                                <TabPanel
-                                    x:Name="HeaderPanel"
-                                    Canvas.ZIndex="1"
-                                    Grid.Row="2"
-                                    IsItemsHost="True"
-                                    Background="{StaticResource LayoutBackground}"/>
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
-
-    <Style TargetType="{x:Type layouts:WDockPanel}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type layouts:WDockPanel}">
-                    <Grid>
-                        <Grid x:Name="PART_Grid"/>
-                        <Canvas x:Name="PART_Canvas"/>
-                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
     <Style TargetType="{x:Type layouts:WDockedGroup}">
-        <Setter Property="Background" Value="{StaticResource LayoutBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LayoutBorderBrush}"/>
+        <Setter Property="Background" Value="{StaticResource WDockBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WDockBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1,0,1,1"/>
-        <Setter Property="Foreground" Value="{StaticResource LayoutForeground}"/>
+        <Setter Property="Foreground" Value="{StaticResource WDockForeground}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type layouts:WDockedGroup}">
-                    <Grid x:Name="TemplateGrid">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Border
-                            x:Name="TitleBackgroundBottom"
                             Background="{TemplateBinding Background}"
-                            BorderThickness="0"
+                            BorderThickness="1"
                             RenderOptions.EdgeMode="Aliased"/>
-                        <ContentControl
-                            x:Name="TitleBottom"
+                        <ContentPresenter
                             Margin="5,0"
                             VerticalAlignment="Center"
                             RenderOptions.EdgeMode="Aliased"
-                            Content="{Binding Path=SelectedItem.Header, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            ContentSource="SelectedHeader"/>
                         <StackPanel
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
@@ -380,17 +303,40 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <ContentPresenter
-                                    x:Name="PART_SelectedContentHost"
                                     ContentSource="SelectedContent"
                                     VerticalAlignment="Stretch"
                                     HorizontalAlignment="Stretch"/>
-                                <StackPanel
-                                    x:Name="PART_Tab"
-                                    Orientation="Horizontal">
-                                </StackPanel>
+                                <ListBox
+                                    x:Name="PART_Headers"
+                                    Grid.Row="1"
+                                    Height="22"
+                                    Style="{StaticResource WDockGroupPanelStyle}"
+                                    ItemContainerStyle="{StaticResource WDockedGroupItemStyle}"
+                                    SelectedIndex="{Binding Path=SelectedIndex, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    ItemsSource="{Binding Path=Items, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             </Grid>
                         </Border>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource Mode=Self}}" Value="True">
+                            <Setter Property="Background" Value="{StaticResource WDockLightBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource WDockLightForeground}"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type layouts:WGridSplitter}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type layouts:WGridSplitter}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

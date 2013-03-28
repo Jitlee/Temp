@@ -11,77 +11,48 @@ using System.Windows;
 namespace AutoDock.Layouts
 {
     [ContentProperty("Items")]
-    [TemplatePart(Name="PART_Tab", Type=typeof(StackPanel))]
-    public abstract class WDockGroup : Control
+    [TemplatePart(Name = "PART_Headers", Type = typeof(ListBox))]
+    public abstract class WDockGroup : WDockLayoutBase
     {
         #region 变量
 
-        private readonly Collection<WDockContent> _items = new Collection<WDockContent>();
+        private readonly ObservableCollection<WDockContent> _items = new ObservableCollection<WDockContent>();
 
-        private StackPanel _tab = null;
+        private ListBox _headers = null;
 
         #endregion
 
         #region 属性
-        
-        public Collection<WDockContent> Items { get { return _items; } }
 
-        #region SelectedItem
+        #region Items
 
-        public static DependencyProperty SelectedItemProperpty =
-            DependencyProperty.Register
-            (
-                "SelectedItem",
-                typeof(WDockContent),
-                typeof(WDockGroup),
-                new PropertyMetadata
-                    (
-                        null,
-                        OnSelectedItemPropertyChanged
-                    )
-            );
-
-        public WDockContent SelectedItem
+        public ObservableCollection<WDockContent> Items
         {
-            get { return (WDockContent)GetValue(SelectedItemProperpty); }
-            set { SetValue(SelectedItemProperpty, value); }
-        }
-
-        private static void OnSelectedItemPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            var element = o as WDockGroup;
-            if (null != element)
-            {
-                element.OnSelectedItemChanged((WDockContent)e.NewValue, (WDockContent)e.OldValue);
-            }
-        }
-
-        private void OnSelectedItemChanged(WDockContent newValue, WDockContent oldValue)
-        {
-
+            get { return _items; }
         }
 
         #endregion
 
         #region SelectedIndex
 
-        public static DependencyProperty SelectedIndexProperpty =
+        public static DependencyProperty SelectedIndexProperty =
             DependencyProperty.Register
             (
                 "SelectedIndex",
                 typeof(int),
                 typeof(WDockGroup),
-                new PropertyMetadata
+                new FrameworkPropertyMetadata
                     (
                         -1,
-                        OnSelectedIndexPropertyChanged
+                        OnSelectedIndexPropertyChanged,
+                        OnSelectedIndexPropertyCoerceValue
                     )
             );
 
         public int SelectedIndex
         {
-            get { return (int)GetValue(SelectedIndexProperpty); }
-            set { SetValue(SelectedIndexProperpty, value); }
+            get { return (int)GetValue(SelectedIndexProperty); }
+            set { SetValue(SelectedIndexProperty, value); }
         }
 
         private static void OnSelectedIndexPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -95,14 +66,101 @@ namespace AutoDock.Layouts
 
         private void OnSelectedIndexChanged(int newValue, int oldValue)
         {
+            SelectedItem = newValue > -1 && newValue < _items.Count ? _items[newValue] : null;
+        }
 
+        private static object OnSelectedIndexPropertyCoerceValue(DependencyObject o, object baseValue)
+        {
+            var element = o as WDockGroup;
+            if (null != element)
+            {
+                var selectedIndex = (int)baseValue;
+                return element.OnSelectedIndexCoerceValue((int)baseValue);
+            }
+            return -1;
+        }
+
+        private int OnSelectedIndexCoerceValue(int baseValue)
+        {
+            if (_items.Count > 0)
+            {
+                if (baseValue == -1)
+                {
+                    return 0;
+                }
+                else if (baseValue >= _items.Count)
+                {
+                    return _items.Count - 1;
+                }
+                return baseValue;
+            }
+            return -1;
+        }
+
+        #endregion
+
+        #region SelectedItem
+
+        public static DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register
+            (
+                "SelectedItem",
+                typeof(WDockContent),
+                typeof(WDockGroup),
+                new FrameworkPropertyMetadata
+                    (
+                        null,
+                        OnSelectedItemPropertyChanged
+                    )
+            );
+
+        public WDockContent SelectedItem
+        {
+            get { return (WDockContent)GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
+        }
+
+        private static void OnSelectedItemPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            var element = o as WDockGroup;
+            if (null != element)
+            {
+                element.OnSelectedItemChanged((WDockContent)e.NewValue, (WDockContent)e.OldValue);
+            }
+        }
+
+        private void OnSelectedItemChanged(WDockContent newValue, WDockContent oldValue)
+        {
+            SelectedContent = null != newValue ? newValue.Content : null;
+            SelectedHeader = null != newValue ? newValue.Header : null;
+        }
+
+        private static object OnSelectedItemPropertyCoerceValue(DependencyObject o, object baseValue)
+        {
+            var element = o as WDockGroup;
+            if (null != element)
+            {
+                var SelectedItem = (WDockContent)baseValue;
+                return element.OnSelectedItemCoerceValue((WDockContent)baseValue);
+            }
+            return null;
+        }
+
+        private object OnSelectedItemCoerceValue(WDockContent baseValue)
+        {
+            var index = _items.IndexOf(baseValue);
+            if (index > -1)
+            {
+                SelectedIndex = index;
+            }
+            return null;
         }
 
         #endregion
 
         #region SelectedContent
 
-        public static DependencyProperty SelectedContentProperpty =
+        internal static DependencyProperty SelectedContentProperty =
             DependencyProperty.Register
             (
                 "SelectedContent",
@@ -111,84 +169,29 @@ namespace AutoDock.Layouts
                 null
             );
 
-        public object SelectedContent
+        internal object SelectedContent
         {
-            get { return GetValue(SelectedContentProperpty); }
-            private set { SetValue(SelectedContentProperpty, value); }
+            get { return GetValue(SelectedContentProperty); }
+            private set { SetValue(SelectedContentProperty, value); }
         }
 
         #endregion
 
-        #region Dock
+        #region SelectedHeader
 
-        public static DependencyProperty DockProperpty =
+        internal static DependencyProperty SelectedHeaderProperty =
             DependencyProperty.Register
             (
-                "Dock",
-                typeof(WDock),
+                "SelectedHeader",
+                typeof(object),
                 typeof(WDockGroup),
-                new PropertyMetadata
-                    (
-                        default(WDock),
-                        OnDockPropertyChanged
-                    )
+                null
             );
 
-        public WDock Dock
+        internal object SelectedHeader
         {
-            get { return (WDock)GetValue(DockProperpty); }
-            set { SetValue(DockProperpty, value); }
-        }
-
-        private static void OnDockPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            var element = o as WDockGroup;
-            if (null != element)
-            {
-                element.OnDockChanged((WDock)e.NewValue, (WDock)e.OldValue);
-            }
-        }
-
-        private void OnDockChanged(WDock newValue, WDock oldValue)
-        {
-
-        }
-
-        #endregion
-
-        #region DockState
-
-        public static DependencyProperty DockStateProperpty =
-            DependencyProperty.Register
-            (
-                "DockState",
-                typeof(WDockState),
-                typeof(WDockGroup),
-                new PropertyMetadata
-                    (
-                        default(WDockState),
-                        OnDockStatePropertyChanged
-                    )
-            );
-
-        public WDockState DockState
-        {
-            get { return (WDockState)GetValue(DockStateProperpty); }
-            set { SetValue(DockStateProperpty, value); }
-        }
-
-        private static void OnDockStatePropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            var element = o as WDockGroup;
-            if (null != element)
-            {
-                element.OnDockStateChanged((WDockState)e.NewValue, (WDockState)e.OldValue);
-            }
-        }
-
-        private void OnDockStateChanged(WDockState newValue, WDockState oldValue)
-        {
-
+            get { return GetValue(SelectedHeaderProperty); }
+            private set { SetValue(SelectedHeaderProperty, value); }
         }
 
         #endregion
@@ -203,14 +206,14 @@ namespace AutoDock.Layouts
 
             if (_items.Count > 0)
             {
-                if (SelectedIndex == -1 || SelectedIndex >= _items.Count)
+                if (SelectedIndex == -1)
                 {
                     SelectedIndex = 0;
                 }
-            }
-            else if(SelectedIndex != -1)
-            {
-                SelectedIndex = -1;
+                else if (SelectedIndex >= _items.Count)
+                {
+                    SelectedIndex = _items.Count - 1;
+                }
             }
         }
 
@@ -218,7 +221,7 @@ namespace AutoDock.Layouts
         {
             base.OnApplyTemplate();
 
-            _tab = GetTemplateChild("PART_Tab") as StackPanel;
+            _headers = GetTemplateChild("PART_Headers") as ListBox;
 
         }
 

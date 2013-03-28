@@ -17,19 +17,19 @@ namespace AutoDock.Layouts
     }
 
     /// <summary>
-    /// 停靠面板状态
+    /// 停靠面板组合类型
     /// </summary>
     public enum WDockState
     {
         /// <summary>
-        /// 文档
-        /// </summary>
-        Document,
-
-        /// <summary>
         /// 停靠的
         /// </summary>
         Docked,
+
+        /// <summary>
+        /// 文档
+        /// </summary>
+        Document,
 
         /// <summary>
         /// 浮动的

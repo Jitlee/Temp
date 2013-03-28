@@ -8,17 +8,17 @@ using System.Windows.Input;
 
 namespace AutoDock.Layouts
 {
-    public abstract class WDockContentBase : ContentControl
+    public abstract class WDockBase : Control
     {
-        static WDockContentBase _prevFocusedElement = null;
+        static WDockBase _prevFocusedElement = null;
 
         #region IsFocused Property
 
         internal static new DependencyProperty IsFocusedProperty =
             DependencyProperty.Register("IsFocused",
             typeof(bool),
-            typeof(WDockContent),
-            new PropertyMetadata(false));
+            typeof(WDockBase),
+            null);
 
         internal new bool IsFocused
         {
@@ -39,7 +39,7 @@ namespace AutoDock.Layouts
                 }
                 _prevFocusedElement = this;
                 _prevFocusedElement.IsFocused = true;
-                _prevFocusedElement.Focus();
+                //_prevFocusedElement.Focus();
             }
         }
     }

@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace AutoDock.Layouts
 {
-    public class WDockedGroup : WDockGroup
+    public sealed class WDockedGroup : WDockGroup
     {
         #region 变量
 
@@ -34,7 +34,6 @@ namespace AutoDock.Layouts
 
         public WDockedGroup()
         {
-
         }
 
         #endregion

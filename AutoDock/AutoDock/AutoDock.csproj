@@ -71,12 +71,18 @@
     <Compile Include="Buttons\WCloseButton.cs" />
     <Compile Include="Buttons\WDropDownButton.cs" />
     <Compile Include="Buttons\WTopmostButton.cs" />
-    <Compile Include="Layouts\WDockContentBase.cs" />
+    <Compile Include="Layouts\WDockBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Layouts\WDockLayoutManager.cs" />
     <Compile Include="Layouts\WDockGroup.cs" />
-    <Compile Include="Layouts\WDockPanel.cs" />
+    <Compile Include="Layouts\WDockLayout.cs" />
+    <Compile Include="Layouts\WDockLayoutBase.cs" />
     <Compile Include="Layouts\WDockState.cs" />
     <Compile Include="Layouts\WDockedGroup.cs" />
     <Compile Include="Layouts\WDockContent.cs" />
+    <Compile Include="Layouts\WDocumentGroup.cs" />
+    <Compile Include="Layouts\WGridSplitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
