@@ -1,0 +1,345 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:buttons="clr-namespace:AutoDock.Buttons"
+    xmlns:layouts="clr-namespace:AutoDock.Layouts">
+    <!-- 颜色开始 -->
+    <SolidColorBrush x:Key="ButtonForeground" Color="#FFCACACA" />
+    <SolidColorBrush x:Key="ButtonHoverForeground" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ButtonLightForeground" Color="#FF333333" />
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ButtonHoverBorderBrush" Color="#FF515151" />
+    <SolidColorBrush x:Key="ButtonBackground" Color="Transparent" />
+
+    <Color x:Key="WDockBackgroundColor">#FF515151</Color>
+    <Color x:Key="WDockLightBackgroundColor">#FFF78A09</Color>
+    <Color x:Key="WDockLightColor">#FFCCCCCC</Color>
+    <Color x:Key="WDockForegroundColor">#FF929292</Color>
+    <Color x:Key="WDockLightForegroundColor">#FF333333</Color>
+    <SolidColorBrush x:Key="WDockBackground" Color="{StaticResource WDockBackgroundColor}" />
+    <SolidColorBrush x:Key="WDockLightBackground" Color="{StaticResource WDockLightBackgroundColor}" />
+    <SolidColorBrush x:Key="WDockBorderBrush" Color="#FF515151" />
+    <SolidColorBrush x:Key="WDockLightBorderBrush" Color="#FFF78A09" />
+    <SolidColorBrush x:Key="WDockForeground" Color="{StaticResource WDockForegroundColor}"/>
+    <SolidColorBrush x:Key="WDockLightForeground" Color="{StaticResource WDockLightForegroundColor}"/>
+
+
+    <SolidColorBrush x:Key="WDockedGroupItemBackground" Color="#FF515151" />
+    <SolidColorBrush x:Key="WDockedGroupItemBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="WDockedGroupSelectedItemBackground" Color="#FF333333" />
+    <SolidColorBrush x:Key="WDockedGroupHoverItemBackground" Color="#FF666666" />
+    <SolidColorBrush x:Key="WDockedGroupItemForeground" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="WDockedGroupSelectedItemForeground" Color="#FFF78A09" />
+
+    <Style x:Key="ButtonStyle" TargetType="Button">
+        <Setter Property="Height" Value="16"/>
+        <Setter Property="Width" Value="16"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonForeground}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    </Style>
+
+    <Style TargetType="{x:Type buttons:WCloseButton}" BasedOn="{StaticResource ButtonStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type buttons:WCloseButton}">
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}">
+                        <Path VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              Data="M0,0 L8,8 M0,8 L8,0"
+                              Stretch="Fill"
+                              Stroke="{TemplateBinding Foreground}"
+                              StrokeThickness="1.5"
+                              Height="9.5"
+                              Width="9.5"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockBase}}}" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource ButtonLightForeground}"/>
+                        </DataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource ButtonHoverForeground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type buttons:WTopmostButton}" BasedOn="{StaticResource ButtonStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type buttons:WTopmostButton}">
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}">
+                        <Path RenderOptions.EdgeMode="Aliased"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              Data="M1,0 L5,0 M1,-0.49319416 L1,6 M3,-0.49319416 L3,9 M4,-0.49319416 L4,6 M5,-0.49319416 L5,6 M0,6 L6.5,6"
+                              Stretch="Fill"
+                              Stroke="{TemplateBinding Foreground}"
+                              UseLayoutRounding="False"
+                              StrokeThickness="1"
+                              Height="10.522"
+                              Width="8"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockBase}}}" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource ButtonLightForeground}"/>
+                        </DataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource ButtonHoverForeground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type buttons:WDropDownButton}" BasedOn="{StaticResource ButtonStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type buttons:WDropDownButton}">
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}">
+                        <Path VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              Data="M0,0 L8,0 4,4 Z"
+                              Stretch="Fill"
+                              Fill="{TemplateBinding Foreground}"
+                              StrokeThickness="1"
+                              Height="4"
+                              Width="8"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type layouts:WDockBase}}}" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource ButtonLightForeground}"/>
+                        </DataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource ButtonHoverForeground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type layouts:WDockContent}">
+        <Setter Property="Background" Value="{StaticResource WDockBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WDockBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1,0,1,1"/>
+        <Setter Property="Foreground" Value="{StaticResource WDockForeground}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type layouts:WDockContent}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            RenderOptions.EdgeMode="Aliased"/>
+                        <ContentPresenter
+                            Margin="5,0"
+                            ContentSource="Header"
+                            VerticalAlignment="Center"
+                            RenderOptions.EdgeMode="Aliased"/>
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <buttons:WTopmostButton x:Name="TopmostButton"/>
+                            <buttons:WCloseButton x:Name="CloseButton"/>
+                        </StackPanel>
+                        <Border
+                            Grid.Row="1"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            RenderOptions.EdgeMode="Aliased">
+                            <ContentPresenter/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource Mode=Self}}" Value="True">
+                            <Setter Property="Background" Value="{StaticResource WDockLightBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource WDockLightForeground}"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>        
+    </Style>
+    
+    <Style TargetType="{x:Type layouts:WDockLayoutManager}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type layouts:WDockLayoutManager}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid
+                            x:Name="PART_DockGrid"
+                            Grid.Column="1"
+                            Grid.Row="1">
+                            <layouts:WDocumentGroup
+                                x:Name="PART_DocumentGroup"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="WDockGroupPanelStyle" TargetType="ListBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <ItemsPresenter/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="WDockedGroupItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Background" Value="{StaticResource WDockedGroupItemBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WDockedGroupItemBorderBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource WDockedGroupItemForeground}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border
+                        Background="{TemplateBinding Background}">
+                        <ContentControl
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Content="{Binding Header}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource WDockedGroupHoverItemBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource WDockedGroupSelectedItemBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource WDockedGroupSelectedItemForeground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type layouts:WDockedGroup}">
+        <Setter Property="Background" Value="{StaticResource WDockBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WDockBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1,0,1,1"/>
+        <Setter Property="Foreground" Value="{StaticResource WDockForeground}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type layouts:WDockedGroup}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="1"
+                            RenderOptions.EdgeMode="Aliased"/>
+                        <ContentPresenter
+                            Margin="5,0"
+                            VerticalAlignment="Center"
+                            RenderOptions.EdgeMode="Aliased"
+                            ContentSource="SelectedHeader"/>
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <buttons:WTopmostButton/>
+                            <buttons:WCloseButton/>
+                        </StackPanel>
+                        <Border
+                            Grid.Row="1"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            RenderOptions.EdgeMode="Aliased">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <ContentPresenter
+                                    ContentSource="SelectedContent"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"/>
+                                <ListBox
+                                    x:Name="PART_Headers"
+                                    Grid.Row="1"
+                                    Height="22"
+                                    Style="{StaticResource WDockGroupPanelStyle}"
+                                    ItemContainerStyle="{StaticResource WDockedGroupItemStyle}"
+                                    SelectedIndex="{Binding Path=SelectedIndex, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    ItemsSource="{Binding Path=Items, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource Mode=Self}}" Value="True">
+                            <Setter Property="Background" Value="{StaticResource WDockLightBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource WDockLightForeground}"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type layouts:WGridSplitter}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type layouts:WGridSplitter}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>
